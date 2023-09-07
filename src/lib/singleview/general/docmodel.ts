@@ -13,7 +13,8 @@ import {
   EMPTY,
   CSAFDocProps,
   type Publisher,
-  type RevisionHistoryEntry
+  type RevisionHistoryEntry,
+  type ProductTree
 } from "$lib/singleview/general/docmodeltypes";
 
 const checkDocumentPresent = (csafDoc: any): boolean => {
@@ -51,6 +52,15 @@ const checkRevisionHistoryPresent = (csafDoc: any): boolean => {
     checkTrackingPresent(csafDoc) &&
     csafDoc.document.tracking.hasOwnProperty(CSAFDocProps.REVISIONHISTORY)
   );
+};
+
+const checkProductTreePresent = (csafDoc: any): boolean => {
+  return Object.prototype.hasOwnProperty.call(csafDoc, CSAFDocProps.PRODUCTTREE);
+};
+
+const getProductTree = (csafDoc: any): ProductTree | undefined => {
+  if (!checkProductTreePresent(csafDoc)) return undefined;
+  return csafDoc.document[CSAFDocProps.PRODUCTTREE] || undefined;
 };
 
 const getTitle = (csafDoc: any): string => {
@@ -157,6 +167,7 @@ const getRevisionHistory = (csafDoc: any): RevisionHistoryEntry[] => {
 
 const convertToDocModel = (csafDoc: any): DocModel => {
   const docModel: DocModel = {
+    productTree: getProductTree(csafDoc),
     title: getTitle(csafDoc),
     lang: getLanguage(csafDoc),
     csafVersion: getCSAFVersion(csafDoc),
@@ -171,6 +182,7 @@ const convertToDocModel = (csafDoc: any): DocModel => {
     lastUpdate: getLastUpdate(csafDoc),
     vulnerabilities: getVulnerabilities(csafDoc),
     productVulnerabilities: [],
+    isProductTreePresent: checkProductTreePresent(csafDoc),
     isDocPresent: checkDocumentPresent(csafDoc),
     isTrackingPresent: checkTrackingPresent(csafDoc),
     isDistributionPresent: checkDistributionPresent(csafDoc),

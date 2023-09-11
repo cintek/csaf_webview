@@ -18,39 +18,39 @@ import {
 } from "$lib/singleview/general/docmodeltypes";
 
 const checkDocumentPresent = (csafDoc: any): boolean => {
-  return csafDoc.hasOwnProperty(CSAFDocProps.DOCUMENT);
+  return Object.prototype.hasOwnProperty.call(csafDoc, CSAFDocProps.DOCUMENT);
 };
 
 const checkTrackingPresent = (csafDoc: any): boolean => {
-  return checkDocumentPresent(csafDoc) && csafDoc.document.hasOwnProperty(CSAFDocProps.TRACKING);
+  return checkDocumentPresent(csafDoc) && Object.prototype.hasOwnProperty.call(csafDoc.document, CSAFDocProps.TRACKING);
 };
 
 const checkDistributionPresent = (csafDoc: any): boolean => {
   return (
-    checkDocumentPresent(csafDoc) && csafDoc.document.hasOwnProperty(CSAFDocProps.DISTRIBUTION)
+    checkDocumentPresent(csafDoc) && Object.prototype.hasOwnProperty.call(csafDoc.document, CSAFDocProps.DISTRIBUTION)
   );
 };
 
 const checkTLPPresent = (csafDoc: any): boolean => {
   return (
     checkDistributionPresent(csafDoc) &&
-    csafDoc.document.distribution.hasOwnProperty(CSAFDocProps.TLP) &&
-    csafDoc.document.distribution[CSAFDocProps.TLP].hasOwnProperty(CSAFDocProps.LABEL)
+    Object.prototype.hasOwnProperty.call(csafDoc.document.distribution, CSAFDocProps.TLP) &&
+    Object.prototype.hasOwnProperty.call(csafDoc.document.distribution[CSAFDocProps.TLP], CSAFDocProps.LABEL)
   );
 };
 
 const checkPublisher = (csafDoc: any): boolean => {
-  return checkDocumentPresent(csafDoc) && csafDoc.document.hasOwnProperty(CSAFDocProps.PUBLISHER);
+  return checkDocumentPresent(csafDoc) && Object.prototype.hasOwnProperty.call(csafDoc.document, CSAFDocProps.PUBLISHER);
 };
 
 const checkVulnerabilities = (csafDoc: any): boolean => {
-  return csafDoc.hasOwnProperty(CSAFDocProps.VULNERABILITIES);
+  return Object.prototype.hasOwnProperty.call(csafDoc, CSAFDocProps.VULNERABILITIES);
 };
 
 const checkRevisionHistoryPresent = (csafDoc: any): boolean => {
   return (
     checkTrackingPresent(csafDoc) &&
-    csafDoc.document.tracking.hasOwnProperty(CSAFDocProps.REVISIONHISTORY)
+    Object.prototype.hasOwnProperty.call(csafDoc.document.tracking, CSAFDocProps.REVISIONHISTORY)
   );
 };
 
